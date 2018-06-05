@@ -189,7 +189,7 @@ _real_pkg_tar = rule(
         "extension": attr.string(default="tar"),
         "symlinks": attr.string_dict(),
         "empty_files": attr.string_list(),
-        "include_runfiles": attr.bool(default=False, mandatory=False),
+        "include_runfiles": attr.bool(default=True, mandatory=False),
         "empty_dirs": attr.string_list(),
         # Implicit dependencies.
         "build_tar": attr.label(
