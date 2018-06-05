@@ -1,0 +1,20 @@
+---
+steps:
+  - label: ":bazel: source build"
+    timeout: 5
+    agents:
+      lyft:fleet:buildkite: cpu
+    command: >
+      sudo apt-get update &&
+      sudo apt-get install -y openjdk-8-jdk &&
+      echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list &&
+      curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add - &&
+      sudo apt-get update &&
+      sudo apt-get install -y bazel
+    plugins:
+      docker#v1.1.1:
+        image: ubuntu:xenial
+        workdir: /workdir
+        environment:
+          - BUILDKITE_BRANCH=${BUILDKITE_BRANCH}
+          - BUILDKITE=true
