@@ -12,6 +12,22 @@ steps:
       apt-get update &&
       apt-get install -y bazel &&
       bazel build //src:bazel
+    artifact_paths:
+      - bazel-bin/src/bazel
+    plugins:
+      docker#v1.1.1:
+        image: phusion/baseimage:latest
+        workdir: /workdir
+        environment:
+          - BUILDKITE_BRANCH=${BUILDKITE_BRANCH}
+          - BUILDKITE=true
+  - wait
+
+  - label: publish
+    command: buildkite-agent artifact download bazel-bin/src/bazel . && stat bazel
+    timeout: 5
+    agents:
+      lyft:fleet:buildkite: cpu
     plugins:
       docker#v1.1.1:
         image: phusion/baseimage:latest
