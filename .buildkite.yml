@@ -11,7 +11,8 @@ steps:
       curl https://bazel.build/bazel-release.pub.gpg | apt-key add - &&
       apt-get update &&
       apt-get install -y bazel &&
-      bazel build //src:bazel
+      bazel build //src:bazel &&
+      ls -lah bazel-bin/src
     artifact_paths:
       - /workdir/bazel-bin/src/bazel
     plugins:
